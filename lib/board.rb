@@ -10,13 +10,23 @@ class Board
 
   def set_cell(cell_num, value)
     row, column = human_to_grid(cell_num)
-    @grid[row][column] = value if @grid[row][column] == @default_value
+    if @grid[row][column] == @default_value
+      @grid[row][column] = value
+    else
+      false
+    end
   end
 
   def get_cell(cell_num)
     row, column = human_to_grid(cell_num)
     return @grid[row][column]
   end
+
+  def get_diagonal(left_to_right = true)
+    direction = left_to_right ? 0 : (@rows - 1)
+    (0...@rows).collect {|i| @grid[i][ (direction - i).abs ] }
+  end
+
 
   # this should probably be private
   def human_to_grid(cell_num)
@@ -36,14 +46,15 @@ class Board
 
   def print
     to_print = @grid.dup
-
+    puts
     while to_print.length > 1 do
       row = to_print.shift
-      puts row.flatten.join('|')
-      puts '- - -'
+      puts row.flatten.join(' | ')
+      puts '---------'
     end
     row = to_print.shift
-    puts row.flatten.join('|')
+    puts row.flatten.join(' | ')
+    puts
   end
 
   private

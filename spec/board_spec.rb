@@ -4,7 +4,7 @@ require_relative '../lib/board'
 describe Board do
   subject(:board) { Board.new }
   let(:empty_grid) { [[' ',' ',' '],[' ', ' ',' '],[' ',' ',' ']] }
-  let(:populated_grid) { [['X','O','X'],['O','O','O'],['X','X','X']] }
+  # let(:populated_grid) { [['X','O','X'],['O','O','O'],['X','X','X']] }
 
   it 'initializes with 3x3 \' \' grid when no values given' do
     expect(board.grid).to eq(empty_grid)
@@ -57,18 +57,34 @@ describe Board do
 
   describe '#print' do
     it 'prints to STDOUT' do
-      expect(STDOUT).to receive(:puts).exactly(5).times
+      expect(STDOUT).to receive(:puts).exactly(7).times
       board.print
     end
 
     context 'with a 5x5 (non default) grid' do
       board = Board.new(5,5)
       it 'prints to STDOUT' do
-        expect(STDOUT).to receive(:puts).exactly(9).times
+        expect(STDOUT).to receive(:puts).exactly(11).times
         board.print
       end
     end
+  end
 
+  describe '#get_diagonal' do
+
+    before(:each) do
+      (1..9).each do |i|
+        board.set_cell(i,i)
+      end
+    end
+
+    it 'returns diagonal values - left to right' do
+      expect(board.get_diagonal).to eq([1,5,9])
+    end
+
+    it 'returns diagonal values - right to left' do
+      expect(board.get_diagonal(false)).to eq([3,5,7])
+    end
   end
 
 end
