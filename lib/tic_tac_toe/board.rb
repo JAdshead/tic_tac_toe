@@ -53,14 +53,11 @@ class Board
     # ensure cell_num is int & zero base the number
     cell_num = cell_num.to_i
     cell_num -= 1
-
     # divide the cell_num by the number of rows to get the row
     row = cell_num / @rows
-
     # take the number of cells on lower rows from the cell number
     # to get column number
     column = cell_num - (row * @columns)
-
     return [row, column]
   end
 
@@ -81,11 +78,13 @@ class Board
     @total_cells ||= @rows * @columns
   end
 
+  def free_cells
+    @grid.flatten.map.with_index {|val, index|  index + 1 if val== ' ' }.compact
+  end
+
 
   private
-
   def new_grid(rows, columns, cell_value)
     Array.new(rows) { Array.new(columns, cell_value) }
   end
-
 end

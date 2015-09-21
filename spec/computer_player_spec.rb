@@ -3,7 +3,7 @@ require_relative '../lib/tic_tac_toe/computer_player'
 
 describe ComputerPlayer do
   subject(:computer) { ComputerPlayer.new('X', board) }
-  let(:board) { double("Board", :count_cells => 9) }
+  let(:board) { double("Board", :free_cells => [1,2,3,4,5,6,7,8,9]) }
 
   it 'inherits from Player' do
     expect(ComputerPlayer.superclass).to be(Player)
@@ -15,7 +15,7 @@ describe ComputerPlayer do
 
   describe '#get_move' do
     it 'returns value for cell' do
-      expect(computer.get_move).to be_between(1, 4)
+      expect(computer.get_move).to be_between(1, 9)
     end
 
     it 'does not return taken a value for taken cell' do

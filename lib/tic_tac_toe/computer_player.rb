@@ -3,12 +3,11 @@ require_relative 'player'
 class ComputerPlayer < Player
 
   def get_move
-    rand(1..9)
+    available_moves.sample
   end
 
-  private
-
-  def get_name
-    'CP-T^3' + @marker
+  def available_moves
+    @board.free_cells
   end
+
 end

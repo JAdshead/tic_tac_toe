@@ -103,4 +103,15 @@ describe Board do
     end
   end
 
+  describe '#free_cells' do
+    before(:each) do
+      (1..6).each do |i|
+        board.set_cell(i,i)
+      end
+    end
+
+    it 'returns correct free cell numbers' do
+      expect(board.free_cells).to eq([7,8,9])
+    end
+  end
 end
