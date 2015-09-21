@@ -10,7 +10,7 @@ describe Game do
 
   it 'initializes with players' do
     expect(game.player1.name).to eq('Player X')
-    expect(game.player2.name).to eq('CP-T^3')
+    expect(game.player2.name).to eq('ComputerPlayer O')
   end
 
   describe '#move' do
