@@ -95,11 +95,11 @@ describe Board do
         expect(board.get_rows).to eq([[1,2,3],[4,5,6],[7,8,9]])
       end
     end
+  end
 
-    describe '#count_cells'do
-      it 'returns correct number of cells in board' do
-        expect(board.count_cells).to eq(9)
-      end
+  describe '#count_cells'do
+    it 'returns correct number of cells in board' do
+      expect(board.count_cells).to eq(9)
     end
   end
 

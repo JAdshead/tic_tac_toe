@@ -1,11 +1,6 @@
-# Menu for Tic tac toe game
+require_relative './tic_tac_toe/game'
 
-module TicTacToe
-
-  def new_game
-  end
-
-  def human_vs_human
-  end
-
+if __FILE__ == $0
+  tic_tac_toe = Game.new(Player, ComputerPlayer)
+  tic_tac_toe.play_game
 end

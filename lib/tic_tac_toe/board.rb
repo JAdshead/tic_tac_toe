@@ -37,6 +37,16 @@ class Board
     @grid
   end
 
+  def combinations
+    get_diagonals + get_columns + get_rows
+  end
+
+  def uniq_rows
+    combinations.reject do |row|
+      uniq_values = row.uniq
+      uniq_values.include?(' ') || uniq_values.count > 1
+    end
+  end
 
   # this should probably be private
   def human_to_grid(cell_num)
@@ -66,6 +76,11 @@ class Board
     puts row.flatten.join(' | ')
     puts
   end
+
+  def count_cells
+    @total_cells ||= @rows * @columns
+  end
+
 
   private
 
