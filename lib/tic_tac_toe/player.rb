@@ -14,7 +14,7 @@ class Player
   private
 
   def get_name
-    'Player ' + @marker
+    self.class.to_s + ' ' + @marker
   end
 
 end
