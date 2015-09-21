@@ -33,7 +33,7 @@ class Game
 
   def move
     player = current_player
-    puts "#{player.name}'s turn. Choose cell (1-9)\n\n"
+    puts "#{player.name}'s turn. Available moves: #{@board.free_cells.join(', ')}\n\n"
 
     cell = player.get_move
 
