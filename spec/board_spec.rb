@@ -70,7 +70,7 @@ describe Board do
     end
   end
 
-  describe '#get_diagonal' do
+  describe 'getting grid values' do
 
     before(:each) do
       (1..9).each do |i|
@@ -78,12 +78,23 @@ describe Board do
       end
     end
 
-    it 'returns diagonal values - left to right' do
-      expect(board.get_diagonal).to eq([1,5,9])
+    describe '#get_diagonals' do
+      it 'returns diagonal values' do
+        expect(board.get_diagonals).to eq([[1,5,9],[3,5,7]])
+      end
     end
 
-    it 'returns diagonal values - right to left' do
-      expect(board.get_diagonal(false)).to eq([3,5,7])
+    describe '#get_columns' do
+      it 'returns column values' do
+        expect(board.get_columns).to eq([[1,4,7],[2,5,8],[3,6,9]])
+      end
+    end
+
+    describe '#get_rows' do
+      it 'returns row values' do
+        expect(board.get_rows).to eq([[1,2,3],[4,5,6],[7,8,9]])
+      end
+
     end
   end
 

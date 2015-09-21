@@ -22,9 +22,19 @@ class Board
     return @grid[row][column]
   end
 
-  def get_diagonal(left_to_right = true)
-    direction = left_to_right ? 0 : (@rows - 1)
-    (0...@rows).collect {|i| @grid[i][ (direction - i).abs ] }
+  def get_diagonals
+    rows = @rows - 1
+    left_to_right = (0..rows).map {|i| @grid[i][i] }
+    right_to_left = (0..rows).map {|i| @grid[i][rows - i] }
+    return [left_to_right, right_to_left]
+  end
+
+  def get_columns
+    @grid.transpose
+  end
+
+  def get_rows
+    @grid
   end
 
 
