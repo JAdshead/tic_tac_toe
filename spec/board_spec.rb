@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../lib/board'
+require_relative '../lib/tic_tac_toe/board'
 
 describe Board do
   subject(:board) { Board.new }
@@ -94,7 +94,12 @@ describe Board do
       it 'returns row values' do
         expect(board.get_rows).to eq([[1,2,3],[4,5,6],[7,8,9]])
       end
+    end
 
+    describe '#count_cells'do
+      it 'returns correct number of cells in board' do
+        expect(board.count_cells).to eq(9)
+      end
     end
   end
 
