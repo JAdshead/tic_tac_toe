@@ -16,23 +16,24 @@ describe Board do
     expect(board.grid).to eq(grid)
   end
 
-  describe '#human_to_grid' do
-    it 'takes human cell number, returns row and colunn' do
-      expect(board.human_to_grid(7)).to eq([2,0])
-    end
+  # Moved to private method
+  # describe '#human_to_grid' do
+  #   it 'takes human cell number, returns row and colunn' do
+  #     expect(board.human_to_grid(7)).to eq([2,0])
+  #   end
 
-    it 'handles int as string' do
-      expect(board.human_to_grid('2')).to eq([0,1])
-    end
+  #   it 'handles int as string' do
+  #     expect(board.human_to_grid('2')).to eq([0,1])
+  #   end
 
-    context 'with a 5x5 (non default) grid' do
-      board = Board.new(5,5)
+  #   context 'with a 5x5 (non default) grid' do
+  #     board = Board.new(5,5)
 
-      it 'takes human cell number, returns row and column' do
-        expect(board.human_to_grid(12)).to eq([2,1])
-      end
-    end
-  end
+  #     it 'takes human cell number, returns row and column' do
+  #       expect(board.human_to_grid(12)).to eq([2,1])
+  #     end
+  #   end
+  # end
 
   describe '#set_cell' do
     it 'updates cell' do
@@ -70,8 +71,7 @@ describe Board do
     end
   end
 
-  describe 'getting grid values' do
-
+  describe 'getting rows' do
     before(:each) do
       (1..9).each do |i|
         board.set_cell(i,i)
@@ -97,21 +97,39 @@ describe Board do
     end
   end
 
+  describe '#uniq_rows' do
+    board = Board.new
+    before(:each) do
+      (1..5).each do |i|
+        board.set_cell(i,'x')
+      end
+    end
+
+    it 'returns rows that have one uniq value' do
+      expect(board.uniq_rows).to eq([['x','x','x']])
+    end
+  end
+
+
   describe '#count_cells'do
     it 'returns correct number of cells in board' do
       expect(board.count_cells).to eq(9)
     end
   end
 
-  describe '#free_cells' do
+  describe '#find_cells' do
     before(:each) do
       (1..6).each do |i|
-        board.set_cell(i,i)
+        board.set_cell(i,'x')
       end
     end
 
     it 'returns correct free cell numbers' do
-      expect(board.free_cells).to eq([7,8,9])
+      expect(board.find_cells(' ')).to eq([7,8,9])
+    end
+
+    it 'returns correct x filled cell numbers' do
+      expect(board.find_cells('x')).to  eq([1,2,3,4,5,6])
     end
   end
 end

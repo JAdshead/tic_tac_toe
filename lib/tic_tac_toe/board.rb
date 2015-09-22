@@ -37,29 +37,22 @@ class Board
     @grid
   end
 
-  def combinations
+  def all_rows
     get_diagonals + get_columns + get_rows
   end
 
   def uniq_rows
-    combinations.reject do |row|
+    all_rows.reject do |row|
       uniq_values = row.uniq
       uniq_values.include?(' ') || uniq_values.count > 1
     end
   end
 
-  # this should probably be private
-  def human_to_grid(cell_num)
-    # ensure cell_num is int & zero base the number
-    cell_num = cell_num.to_i
-    cell_num -= 1
-    # divide the cell_num by the number of rows to get the row
-    row = cell_num / @rows
-    # take the number of cells on lower rows from the cell number
-    # to get column number
-    column = cell_num - (row * @columns)
-    return [row, column]
-  end
+  # def free_rows
+  #   all_rows.select do |row|
+  #     row.include?(@default_value)
+  #   end
+  # end
 
   def print
     to_print = @grid.dup
@@ -78,12 +71,27 @@ class Board
     @total_cells ||= @rows * @columns
   end
 
-  def free_cells
-    @grid.flatten.map.with_index {|val, index|  index + 1 if val== ' ' }.compact
+  def find_cells value
+    @grid.flatten.map.with_index {|val, index|  index + 1 if val== value }.compact
   end
 
+  def free_cells
+    find_cells @default_value
+  end
 
   private
+  def human_to_grid(cell_num)
+    # ensure cell_num is int & zero base the number
+    cell_num = cell_num.to_i
+    cell_num -= 1
+    # divide the cell_num by the number of rows to get the row
+    row = cell_num / @rows
+    # take the number of cells on lower rows from the cell number
+    # to get column number
+    column = cell_num - (row * @columns)
+    return [row, column]
+  end
+
   def new_grid(rows, columns, cell_value)
     Array.new(rows) { Array.new(columns, cell_value) }
   end
