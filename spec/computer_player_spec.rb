@@ -59,14 +59,14 @@ describe ComputerPlayer do
     end
 
     it 'forces opponent to block, block does not create forking move' do
-      allow(board).to receive(:free_cells).and_return( [2,3,4,5,6,8,9] )
-      allow(board).to receive(:find_cells).with('x') {[1]}
-      computer = ComputerPlayer.new('x',board)
+      allow(board).to receive(:free_cells).and_return( [2,3,4,6,7,8] )
+      allow(board).to receive(:find_cells).with('o') {[5]}
+      computer = ComputerPlayer.new('o',board)
 
       results = []
       6.times { results << computer.get_move }
 
-      expect(results).not_to include(4,5,6,8)
+      expect(results).not_to include(3,7)
     end
 
     it 'it blocks fork' do

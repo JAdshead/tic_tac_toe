@@ -7,10 +7,10 @@ class ComputerPlayer < Player
       winning_moves.sample
     elsif blocking_moves.any?
       blocking_moves.sample
-    elsif force_block.any?
-      force_block.sample
     elsif fork_moves.any?
       fork_moves.sample
+    elsif force_block.any?
+      force_block.sample
     elsif block_fork_moves.any?
       block_fork_moves.sample
     elsif available_moves.length == @board.count_cells
@@ -43,18 +43,16 @@ class ComputerPlayer < Player
   end
 
   def force_block
-    moves = winning_lines.map do |line|
+    winning_lines.map do |line|
       if ((line & opponent_moves).empty? && (line & own_moves).any?)
-        available_moves = line - own_moves
-        available_moves.map do |move|
-          opponent_forced_move = line - ([move] << own_moves)
-          check_wining_moves(opponent_forced_move << opponent_moves).any?
+        moves = line - own_moves
+        moves.map do |move|
+          forced_move = (line - (own_moves << move)).first
+          opponent_future_moves = opponent_moves << forced_move
+          check_wining_moves(opponent_future_moves).length < 2 ? move : nil
         end
       end
-
     end.flatten.compact
-
-    # remove lines that result in blocking next turn
   end
 
   def fork_moves
@@ -87,8 +85,8 @@ class ComputerPlayer < Player
     end.compact
   end
 
-  def check_fork_moves moves_made
-    available_moves.map do |move|
+  def check_fork_moves(moves_made, moves_left = available_moves)
+    moves_left.map do |move|
       future_moves = moves_made.dup
       future_moves << move
       (check_wining_moves future_moves).length > 1 ? move : nil
