@@ -70,14 +70,14 @@ describe ComputerPlayer do
     end
 
     it 'it blocks fork' do
-      allow(board).to receive(:free_cells) {[1,3,4,5,7,9]}
-      allow(board).to receive(:find_cells).with('o') {[2]}
+      allow(board).to receive(:free_cells) {[2,3,4,5,7,8,9]}
+      allow(board).to receive(:find_cells).with('o') {[]}
       computer = ComputerPlayer.new('o',board)
 
       results = []
       6.times { results << computer.get_move }
 
-      expect(results).to eq([9,9,9,9,9,9])
+      expect(results).not_to include(1,2,6,7,8,9)
     end
 
     it 'it will choose center' do
