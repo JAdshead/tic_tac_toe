@@ -44,7 +44,7 @@ class Board
   def uniq_rows
     all_rows.reject do |row|
       uniq_values = row.uniq
-      uniq_values.include?(' ') || uniq_values.count > 1
+      uniq_values.include?(@default_value) || uniq_values.count > 1
     end
   end
 
