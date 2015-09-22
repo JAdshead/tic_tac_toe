@@ -37,14 +37,14 @@ describe ComputerPlayer do
     end
 
     it 'will defend' do
-      allow(board).to receive(:free_cells) {[2,4,5,6,7,9]}
-      allow(board).to receive(:find_cells).with('o') {[8]}
+      allow(board).to receive(:free_cells) {[4,5,6,9]}
+      allow(board).to receive(:find_cells).with('o') {[3,5]}
       computer = ComputerPlayer.new('o',board)
 
       results = []
       6.times { results << computer.get_move }
 
-      expect(results).to eq([2,2,2,2,2,2])
+      expect(results).to eq([4,4,4,4,4,4])
     end
 
     it 'it will fork - create two oppotunities to win' do
