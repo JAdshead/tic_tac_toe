@@ -3,13 +3,15 @@ require_relative 'player'
 class ComputerPlayer < Player
 
   def get_move
-    if winning_moves.length > 0
+    if winning_moves.any?
       winning_moves.sample
-    elsif blocking_moves.length > 0
+    elsif blocking_moves.any?
       blocking_moves.sample
-    elsif fork_moves.length > 0
+    elsif force_block.any?
+      force_block.sample
+    elsif fork_moves.any?
       fork_moves.sample
-    elsif block_fork_moves.length > 0
+    elsif block_fork_moves.any?
       block_fork_moves.sample
     elsif available_moves.length == @board.count_cells
       1
@@ -38,6 +40,21 @@ class ComputerPlayer < Player
 
   def blocking_moves
     check_wining_moves opponent_moves
+  end
+
+  def force_block
+    moves = winning_lines.map do |line|
+      if ((line & opponent_moves).empty? && (line & own_moves).any?)
+        available_moves = line - own_moves
+        available_moves.map do |move|
+          opponent_forced_move = line - ([move] << own_moves)
+          check_wining_moves(opponent_forced_move << opponent_moves).any?
+        end
+      end
+
+    end.flatten.compact
+
+    # remove lines that result in blocking next turn
   end
 
   def fork_moves

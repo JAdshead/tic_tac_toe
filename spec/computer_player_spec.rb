@@ -37,8 +37,8 @@ describe ComputerPlayer do
     end
 
     it 'will defend' do
-      allow(board).to receive(:free_cells) {[4,5,6,9]}
-      allow(board).to receive(:find_cells).with('o') {[3,5]}
+      allow(board).to receive(:free_cells) {[2,3,4,6,8,9]}
+      allow(board).to receive(:find_cells).with('o') {[5]}
       computer = ComputerPlayer.new('o',board)
 
       results = []
@@ -56,6 +56,17 @@ describe ComputerPlayer do
       6.times { results << computer.get_move }
 
       expect(results).to eq([9,9,9,9,9,9])
+    end
+
+    it 'forces opponent to block, block does not create forking move' do
+      allow(board).to receive(:free_cells).and_return( [2,3,4,5,6,8,9] )
+      allow(board).to receive(:find_cells).with('x') {[1]}
+      computer = ComputerPlayer.new('x',board)
+
+      results = []
+      6.times { results << computer.get_move }
+
+      expect(results).not_to include(4,5,6,8)
     end
 
     it 'it blocks fork' do
@@ -80,7 +91,6 @@ describe ComputerPlayer do
       expect(results).to eq([5,5,5,5,5,5])
     end
 
-    xit 'it will go opposite corner'
 
     xit 'it will pick empty corner'
 
