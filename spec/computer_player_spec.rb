@@ -36,7 +36,7 @@ describe ComputerPlayer do
       expect(results).to eq([2,2,2,2,2,2])
     end
 
-    xit 'will defend' do
+    it 'will defend' do
       allow(board).to receive(:free_cells) {[2,4,5,6,7,9]}
       allow(board).to receive(:find_cells).with('o') {[8]}
       computer = ComputerPlayer.new('o',board)

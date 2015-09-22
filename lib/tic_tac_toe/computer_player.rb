@@ -3,7 +3,13 @@ require_relative 'player'
 class ComputerPlayer < Player
 
   def get_move
-    possible_winning_moves.length > 0 ? possible_winning_moves.sample : available_moves.sample
+    if winning_moves.length > 0
+      possible_winning_moves.sample
+    elsif blocking_move.length > 0
+      blocking_move.sample
+    else
+      available_moves.sample
+    end
   end
 
   def available_moves
@@ -16,7 +22,11 @@ class ComputerPlayer < Player
     # [1,3]
   end
 
-  def possible_winning_moves
+  def opponent_moves
+    (1..9).to_a - (own_moves + available_moves)
+  end
+
+  def winning_moves
     winning_moves = winning_line_numbers.map do |line|
       arr = line - own_moves
       if arr.length == 1
@@ -25,13 +35,22 @@ class ComputerPlayer < Player
         nil
       end
     end
-
     winning_moves.compact
   end
 
-  def opponent_moves
-    (1..9).to_a - (own_moves + available_moves)
+  def blocking_move
+    blocking_move = winning_line_numbers.map do |line|
+      arr = line - opponent_moves
+      if arr.length == 1
+        available_moves.include?(arr.first) ? arr.first : nil
+      else
+        nil
+      end
+    end
+    blocking_move.compact
   end
+
+  private
 
   def winning_line_numbers
     [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,9]]
