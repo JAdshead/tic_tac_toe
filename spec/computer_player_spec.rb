@@ -3,7 +3,7 @@ require_relative '../lib/tic_tac_toe/computer_player'
 
 describe ComputerPlayer do
   subject(:computer) { ComputerPlayer.new('X', board) }
-  let(:board) { double("Board", :free_cells => [1,2,3,4,5,6,7,8,9]) }
+  let(:board) { double("Board", :free_cells => [1,2,3,4,5,6,7,8,9], :find_cells =>[])}
 
   it 'inherits from Player' do
     expect(ComputerPlayer.superclass).to be(Player)
