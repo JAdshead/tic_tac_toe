@@ -58,7 +58,16 @@ describe ComputerPlayer do
       expect(results).to eq([9,9,9,9,9,9])
     end
 
-    xit 'it block fork'
+    it 'it blocks fork' do
+      allow(board).to receive(:free_cells) {[1,3,4,5,7,9]}
+      allow(board).to receive(:find_cells).with('o') {[2]}
+      computer = ComputerPlayer.new('o',board)
+
+      results = []
+      6.times { results << computer.get_move }
+
+      expect(results).to eq([9,9,9,9,9,9])
+    end
 
     it 'it will choose center' do
       allow(board).to receive(:free_cells).and_return( [1,2,4,5,6,7,8,9],[1,3,4,5,6,7,8,9],[1,2,3,4,5,7,8,9] )
