@@ -21,7 +21,6 @@ class Game
   end
 
   def play_game
-    @board.print
     if is_winner?
       puts "#{last_player.name} wins!!"
     elsif is_draw?

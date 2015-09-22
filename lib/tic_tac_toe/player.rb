@@ -8,6 +8,7 @@ class Player
   end
 
   def get_move
+    @board.print
     gets.chomp
   end
 
