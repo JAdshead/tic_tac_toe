@@ -12,7 +12,6 @@ module TicTacToe
     private
 
     def setup_game(p1, p2, p1_name = nil, p2_name =nil)
-      # require 'pry'; binding.pry
       @game = Game.new(p1, p2, p1_name, p2_name)
       play
     end
