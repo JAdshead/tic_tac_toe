@@ -1,6 +1,8 @@
 require 'spec_helper'
 require_relative '../lib/tic_tac_toe/board'
 
+include TicTacToe
+
 describe Board do
   subject(:board) { Board.new }
   let(:empty_grid) { [[' ',' ',' '],[' ', ' ',' '],[' ',' ',' ']] }

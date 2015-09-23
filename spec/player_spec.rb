@@ -1,6 +1,8 @@
 require 'spec_helper'
 require_relative '../lib/tic_tac_toe/player'
 
+include TicTacToe
+
 describe Player do
   subject(:player) { Player.new('X', board) }
   let(:board) { double("Board", :grid => [[' ',' '],[' ',' ']]) }

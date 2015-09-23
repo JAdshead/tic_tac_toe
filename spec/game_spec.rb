@@ -1,6 +1,8 @@
 require 'spec_helper'
 require_relative '../lib/tic_tac_toe/game'
 
+include TicTacToe
+
 describe Game do
   subject(:game) { Game.new(Player, ComputerPlayer) }
   # let(:Player) { class_double("Player") }

@@ -1,21 +1,21 @@
-class Player
-  attr_reader :name, :marker
+module TicTacToe
+  class Player
+    attr_reader :name, :marker
 
-  def initialize(marker, board, name = nil)
-    @marker = marker
-    @board  = board
-    @name   = name || get_name
+    def initialize(marker, board, name = nil)
+      @marker = marker
+      @board  = board
+      @name   = name || get_name
+    end
+
+    def get_move
+      @board.print
+      gets.chomp
+    end
+
+    private
+    def get_name
+      self.class.to_s.sub('TicTacToe::','') + ' ' + @marker
+    end
   end
-
-  def get_move
-    @board.print
-    gets.chomp
-  end
-
-  private
-
-  def get_name
-    self.class.to_s + ' ' + @marker
-  end
-
 end

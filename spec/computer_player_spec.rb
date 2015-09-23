@@ -1,6 +1,8 @@
 require 'spec_helper'
 require_relative '../lib/tic_tac_toe/computer_player'
 
+include TicTacToe
+
 describe ComputerPlayer do
   subject(:computer) { ComputerPlayer.new('X', board) }
   let(:board) { double("Board", :free_cells => [1,2,3,4,5,6,7,8,9], :find_cells =>[], :count_cells => 9)}
@@ -90,11 +92,6 @@ describe ComputerPlayer do
 
       expect(results).to eq([5,5,5,5,5,5])
     end
-
-
-    xit 'it will pick empty corner'
-
-    xit 'it will pick empty side'
 
     it 'it will pick corner if first move' do
       expect(computer.get_move).to be(1)
