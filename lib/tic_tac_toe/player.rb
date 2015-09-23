@@ -10,7 +10,7 @@ module TicTacToe
 
     def get_move
       @board.print
-      gets.chomp
+      $stdin.gets.chomp
     end
 
     private
