@@ -77,7 +77,7 @@ describe ComputerPlayer do
       results = []
       6.times { results << computer.get_move }
 
-      expect(results).not_to include(1,2,6,7,8,9)
+      expect(results).not_to include(1,2,6,7,8)
     end
 
     it 'it will choose center' do
