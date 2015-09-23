@@ -4,7 +4,7 @@ require_relative './computer_player'
 
 module TicTacToe
   class Game
-    attr_reader :player1, :player2
+    attr_reader :player1, :player2, :board, :turns
 
     def initialize(player_1_class = Player, player_2_class = Player, player_1_name=nil, player_2_name=nil)
       @board   = Board.new
@@ -14,11 +14,11 @@ module TicTacToe
     end
 
     def current_player
-      @turns % 2 == 0 ? @player1 : @player2
+      turns % 2 == 0 ? player1 : player2
     end
 
     def last_player
-      @turns % 2 == 1 ? @player1 : @player2
+      turns % 2 == 1 ? player1 : player2
     end
 
     def play_game
@@ -33,26 +33,26 @@ module TicTacToe
 
     def move
       player = current_player
-      puts "#{player.name}'s turn. Available moves: #{@board.free_cells.join(', ')}\n\n"
+      puts "#{player.name}'s turn. Available moves: #{board.free_cells.join(', ')}\n\n"
 
       cell = player.get_move
 
-      until @board.set_cell(cell, player.marker)
+      until board.set_cell(cell, player.marker)
         puts "\nSorry, cell already taken. Please try again\n\n"
         cell = player.get_move
       end
 
-      @turns += 1
+      turns += 1
 
       play_game
     end
 
     def is_winner?
-      @board.uniq_rows.count >= 1
+      board.uniq_rows.count >= 1
     end
 
     def is_draw?
-      @turns >= @board.count_cells
+      turns >= board.count_cells
     end
 
   end

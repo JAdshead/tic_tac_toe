@@ -1,6 +1,6 @@
 module TicTacToe
   class Board
-    attr_reader :grid
+    attr_reader :grid, :default_value, :rows, :columns
 
     def initialize( rows = 3, columns = 3, default_value = ' ' )
       @grid          = new_grid(rows, columns, default_value)
@@ -11,8 +11,8 @@ module TicTacToe
 
     def set_cell(cell_num, value)
       row, column = human_to_grid(cell_num)
-      if @grid[row][column] == @default_value
-        @grid[row][column] = value
+      if grid[row][column] == default_value
+        grid[row][column] = value
       else
         false
       end
@@ -20,22 +20,21 @@ module TicTacToe
 
     def get_cell(cell_num)
       row, column = human_to_grid(cell_num)
-      return @grid[row][column]
+      return grid[row][column]
     end
 
     def get_diagonals
-      rows = @rows - 1
-      left_to_right = (0..rows).map {|i| @grid[i][i] }
-      right_to_left = (0..rows).map {|i| @grid[i][rows - i] }
+      left_to_right = (0...rows).map {|i| grid[i][i] }
+      right_to_left = (0...rows).map {|i| grid[i][rows - (i + 1)] }
       return [left_to_right, right_to_left]
     end
 
     def get_columns
-      @grid.transpose
+      grid.transpose
     end
 
     def get_rows
-      @grid
+      grid
     end
 
     def all_rows
@@ -45,12 +44,12 @@ module TicTacToe
     def uniq_rows
       all_rows.reject do |row|
         uniq_values = row.uniq
-        uniq_values.include?(@default_value) || uniq_values.count > 1
+        uniq_values.include?(default_value) || uniq_values.count > 1
       end
     end
 
     def print
-      to_print = @grid.dup
+      to_print = grid.dup
       puts
       while to_print.length > 1 do
         row = to_print.shift
@@ -63,15 +62,15 @@ module TicTacToe
     end
 
     def count_cells
-      @total_cells ||= @rows * @columns
+      total_cells ||= rows * columns
     end
 
     def find_cells value
-      @grid.flatten.map.with_index {|val, index|  index + 1 if val== value }.compact
+      grid.flatten.map.with_index {|val, index|  index + 1 if val== value }.compact
     end
 
     def free_cells
-      find_cells @default_value
+      find_cells default_value
     end
 
     private
@@ -80,10 +79,10 @@ module TicTacToe
       cell_num = cell_num.to_i
       cell_num -= 1
       # divide the cell_num by the number of rows to get the row
-      row = cell_num / @rows
+      row = cell_num / rows
       # take the number of cells on lower rows from the cell number
       # to get column number
-      column = cell_num - (row * @columns)
+      column = cell_num - (row * columns)
       return [row, column]
     end
 

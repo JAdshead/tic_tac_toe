@@ -14,7 +14,7 @@ module TicTacToe
         force_block.sample
       elsif block_fork_moves.any?
         block_fork_moves.sample
-      elsif available_moves.length == @board.count_cells
+      elsif available_moves.length == board.count_cells
         1
       elsif center_move
         center_move
@@ -24,11 +24,11 @@ module TicTacToe
     end
 
     def available_moves
-      @board.free_cells
+      board.free_cells
     end
 
     def own_moves
-      @board.find_cells @marker
+      board.find_cells marker
     end
 
     def opponent_moves
