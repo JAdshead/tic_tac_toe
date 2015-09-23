@@ -4,14 +4,16 @@ require_relative './game'
 
 module TicTacToe
   class Application
+
     def initialize(argv)
       process_options(argv)
     end
 
     private
 
-    def setup_game(p1, p2)
-      @game = Game.new(p1, p2)
+    def setup_game(p1, p2, p1_name = nil, p2_name =nil)
+      # require 'pry'; binding.pry
+      @game = Game.new(p1, p2, p1_name, p2_name)
       play
     end
 
@@ -33,9 +35,13 @@ module TicTacToe
         opt.separator  ""
         opt.separator  "Options"
 
-  
         opt.on('-h','--help','help') do
           puts opt_parser
+        end
+
+        opt.on('-n','--names PLAYER1,PLAYER2', Array, 'List of player names') do |names|
+          options[:player1name] = names[0]
+          options[:player2name] = names[1]
         end
 
         opt.separator  ""
@@ -47,25 +53,13 @@ module TicTacToe
 
       case argv[0]
       when "pvp"
-        puts
-        puts 'Player Vs Player'
-        puts
-        setup_game(Player, Player)
+        setup_game(Player, Player, options[:player1name], options[:player2name])
       when "pvc"
-        puts
-        puts 'Player Vs Computer'
-        puts
-        setup_game(Player, ComputerPlayer)
+        setup_game(Player, ComputerPlayer, options[:player1name], options[:player2name])
       when "cvp"
-        puts
-        puts 'Computer Vs Player'
-        puts
-        setup_game(ComputerPlayer, Player)
+        setup_game(ComputerPlayer, Player, options[:player1name], options[:player2name])
       when "cvc"
-        puts
-        puts 'Computer Vs Computer'
-        puts
-        setup_game(ComputerPlayer, ComputerPlayer)
+        setup_game(ComputerPlayer, ComputerPlayer, options[:player1name], options[:player2name])
       else
         puts opt_parser
       end

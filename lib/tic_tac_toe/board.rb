@@ -49,12 +49,6 @@ module TicTacToe
       end
     end
 
-    # def free_rows
-    #   all_rows.select do |row|
-    #     row.include?(@default_value)
-    #   end
-    # end
-
     def print
       to_print = @grid.dup
       puts
