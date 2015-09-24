@@ -15,15 +15,15 @@ describe ComputerPlayer do
     expect(computer.name).to eq('ComputerPlayer X')
   end
 
-  describe '#get_move' do
+  describe '#move' do
     it 'returns value for cell' do
-      expect(computer.get_move).to be_between(1, 9)
+      expect(computer.move).to be_between(1, 9)
     end
 
     it 'does not return a value for taken cell' do
       allow(board).to receive(:free_cells) { [4]}
       computer = ComputerPlayer.new('x',board)
-      expect(computer.get_move).to eq(4)
+      expect(computer.move).to eq(4)
     end
 
     it 'has killer instict' do
@@ -31,9 +31,9 @@ describe ComputerPlayer do
       allow(board).to receive(:find_cells).with('x') {[1,3]}
       computer = ComputerPlayer.new('x',board)
 
-      # run get_move 6times to minimize chance causing pass
+      # run move 6times to minimize chance causing pass
       results = []
-      6.times { results << computer.get_move }
+      6.times { results << computer.move }
 
       expect(results).to eq([2,2,2,2,2,2])
     end
@@ -44,7 +44,7 @@ describe ComputerPlayer do
       computer = ComputerPlayer.new('o',board)
 
       results = []
-      6.times { results << computer.get_move }
+      6.times { results << computer.move }
 
       expect(results).to eq([4,4,4,4,4,4])
     end
@@ -55,7 +55,7 @@ describe ComputerPlayer do
       computer = ComputerPlayer.new('x',board)
 
       results = []
-      6.times { results << computer.get_move }
+      6.times { results << computer.move }
 
       expect(results).to eq([9,9,9,9,9,9])
     end
@@ -66,7 +66,7 @@ describe ComputerPlayer do
       computer = ComputerPlayer.new('o',board)
 
       results = []
-      6.times { results << computer.get_move }
+      6.times { results << computer.move }
 
       expect(results).not_to include(3,7)
     end
@@ -77,7 +77,7 @@ describe ComputerPlayer do
       computer = ComputerPlayer.new('o',board)
 
       results = []
-      6.times { results << computer.get_move }
+      6.times { results << computer.move }
 
       expect(results).not_to include(1,2,6,7,8)
     end
@@ -88,13 +88,13 @@ describe ComputerPlayer do
       computer = ComputerPlayer.new('o',board)
 
       results = []
-      6.times { results << computer.get_move }
+      6.times { results << computer.move }
 
       expect(results).to eq([5,5,5,5,5,5])
     end
 
     it 'it will pick corner if first move' do
-      expect(computer.get_move).to be(1)
+      expect(computer.move).to be(1)
     end
   end
 

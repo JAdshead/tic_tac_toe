@@ -7,10 +7,10 @@ module TicTacToe
     attr_reader :player1, :player2, :board, :turns, :new_game
     attr_writer :new_game
 
-    def initialize(player_1_class = Player, player_2_class = Player, player_1_name=nil, player_2_name=nil)
+    def initialize(player_1_class = Player, player_2_class = Player, player_1_name = nil, player_2_name = nil)
       @board    = Board.new
-      @player1  = player_1_class.new('X',@board, player_1_name)
-      @player2  = player_2_class.new('O',@board, player_2_name)
+      @player1  = player_1_class.new('X', @board, player_1_name)
+      @player2  = player_2_class.new('O', @board, player_2_name)
       @turns    = 0
     end
 
@@ -25,10 +25,10 @@ module TicTacToe
     def play
       print_intructions
 
-      if is_winner?
+      if winner?
         puts board.print
         puts "#{last_player.name} wins!!"
-      elsif is_draw?
+      elsif draw?
         puts board.print
         puts "It's a draw!!"
       else
@@ -40,14 +40,13 @@ module TicTacToe
       player = current_player
 
       board.print
-      puts "#{player.name}'s turn. Available moves: #{board.free_cells.join(', ')}\n\n"
+      puts "#{player.name}'s turn."
+      puts "Available moves: #{board.free_cells.join(', ')}\n\n"
 
-      cell = player.get_move
-
+      cell = player.move
       until board.set_cell(cell, player.marker)
         puts "\nSorry, cell already taken. Please try again\n\n"
-        puts "Available moves: #{board.free_cells.join(', ')}\n\n"
-        cell = player.get_move
+        cell = player.move
       end
 
       @turns += 1
@@ -55,10 +54,8 @@ module TicTacToe
     end
 
     def print_intructions
-      puts
-      puts "To play, choose a number between 1 and 9 to mark space in the grid\n\n"
-      puts 'The player who succeeds in placing three of their marks '
-      puts 'in a horizontal, vertical, or diagonal row wins the game.'
+      puts 'Choose a number between 1 and 9 to mark space in the grid'
+      puts 'Place 3 marks in a horizontal, vertical, or diagonal row to wine.'
       puts
       puts "\t 1 | 2 | 3 "
       puts "\t --+---+-- "
@@ -68,13 +65,12 @@ module TicTacToe
       puts
     end
 
-    def is_winner?
+    def winner?
       board.complete_rows.count >= 1
     end
 
-    def is_draw?
+    def draw?
       turns >= board.count_cells
     end
-
   end
 end

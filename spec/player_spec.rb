@@ -18,15 +18,15 @@ describe Player do
     end
   end
 
-  describe '#get_move' do
+  describe '#move' do
     it 'returns cell number' do
       allow($stdin).to receive(:gets).and_return("5")
-      expect(player.get_move).to eq("5")
+      expect(player.move).to eq("5")
     end
 
     it 'does not allow invalid entries' do
       allow($stdin).to receive(:gets).and_return("y","five","12","0", "5")
-      expect(player.get_move).to eq("5")
+      expect(player.move).to eq("5")
     end
   end
 
