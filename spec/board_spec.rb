@@ -18,25 +18,6 @@ describe Board do
     expect(board.grid).to eq(grid)
   end
 
-  # Moved to private method
-  # describe '#human_to_grid' do
-  #   it 'takes human cell number, returns row and colunn' do
-  #     expect(board.human_to_grid(7)).to eq([2,0])
-  #   end
-
-  #   it 'handles int as string' do
-  #     expect(board.human_to_grid('2')).to eq([0,1])
-  #   end
-
-  #   context 'with a 5x5 (non default) grid' do
-  #     board = Board.new(5,5)
-
-  #     it 'takes human cell number, returns row and column' do
-  #       expect(board.human_to_grid(12)).to eq([2,1])
-  #     end
-  #   end
-  # end
-
   describe '#set_cell' do
     it 'updates cell' do
       board.set_cell(3,'X')
@@ -80,26 +61,26 @@ describe Board do
       end
     end
 
-    describe '#get_diagonals' do
+    describe '#diagonal_rows' do
       it 'returns diagonal values' do
-        expect(board.get_diagonals).to eq([[1,5,9],[3,5,7]])
+        expect(board.diagonal_rows).to eq([[1,5,9],[3,5,7]])
       end
     end
 
-    describe '#get_columns' do
+    describe '#vertical_rows' do
       it 'returns column values' do
-        expect(board.get_columns).to eq([[1,4,7],[2,5,8],[3,6,9]])
+        expect(board.vertical_rows).to eq([[1,4,7],[2,5,8],[3,6,9]])
       end
     end
 
-    describe '#get_rows' do
+    describe '#horizontal_rows' do
       it 'returns row values' do
-        expect(board.get_rows).to eq([[1,2,3],[4,5,6],[7,8,9]])
+        expect(board.horizontal_rows).to eq([[1,2,3],[4,5,6],[7,8,9]])
       end
     end
   end
 
-  describe '#uniq_rows' do
+  describe '#complete_rows' do
     board = Board.new
     before(:each) do
       (1..5).each do |i|
@@ -108,7 +89,7 @@ describe Board do
     end
 
     it 'returns rows that have one uniq value' do
-      expect(board.uniq_rows).to eq([['x','x','x']])
+      expect(board.complete_rows).to eq([['x','x','x']])
     end
   end
 

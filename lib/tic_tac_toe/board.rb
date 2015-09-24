@@ -2,7 +2,7 @@ module TicTacToe
   class Board
     attr_reader :grid, :default_value, :rows, :columns
 
-    def initialize( rows = 3, columns = 3, default_value = ' ' )
+    def initialize(rows = 3, columns = 3, default_value = ' ')
       @grid          = new_grid(rows, columns, default_value)
       @default_value = default_value
       @rows          = rows
@@ -23,25 +23,25 @@ module TicTacToe
       return grid[row][column]
     end
 
-    def get_diagonals
-      left_to_right = (0...rows).map {|i| grid[i][i] }
-      right_to_left = (0...rows).map {|i| grid[i][rows - (i + 1)] }
-      return [left_to_right, right_to_left]
+    def diagonal_rows
+      left_to_right = (0...rows).map { |i| grid[i][i] }
+      right_to_left = (0...rows).map { |i| grid[i][rows - (i + 1)] }
+      [left_to_right, right_to_left]
     end
 
-    def get_columns
+    def vertical_rows
       grid.transpose
     end
 
-    def get_rows
+    def horizontal_rows
       grid
     end
 
     def all_rows
-      get_diagonals + get_columns + get_rows
+      diagonal_rows + vertical_rows + horizontal_rows
     end
 
-    def uniq_rows
+    def complete_rows
       all_rows.reject do |row|
         uniq_values = row.uniq
         uniq_values.include?(default_value) || uniq_values.count > 1
@@ -53,11 +53,11 @@ module TicTacToe
       puts
       while to_print.length > 1 do
         row = to_print.shift
-        puts row.flatten.join(' | ')
-        puts '---------'
+        puts "\t " + row.flatten.join(' | ')
+        puts "\t --+---+--"
       end
       row = to_print.shift
-      puts row.flatten.join(' | ')
+      puts "\t " +row.flatten.join(' | ')
       puts
     end
 
@@ -66,7 +66,7 @@ module TicTacToe
     end
 
     def find_cells value
-      grid.flatten.map.with_index {|val, index|  index + 1 if val== value }.compact
+      grid.flatten.map.with_index { |val, index|  index + 1 if val== value }.compact
     end
 
     def free_cells
@@ -75,15 +75,16 @@ module TicTacToe
 
     private
     def human_to_grid(cell_num)
-      # ensure cell_num is int & zero base the number
-      cell_num = cell_num.to_i
-      cell_num -= 1
-      # divide the cell_num by the number of rows to get the row
-      row = cell_num / rows
-      # take the number of cells on lower rows from the cell number
-      # to get column number
-      column = cell_num - (row * columns)
-      return [row, column]
+      cell_num = cell_num.to_i - 1
+      [row_number(cell_num), column_number(cell_num)]
+    end
+
+    def row_number(cell_num)
+      cell_num / rows
+    end
+
+    def column_number(cell_num)
+      cell_num - (row_number(cell_num) * columns)
     end
 
     def new_grid(rows, columns, cell_value)
