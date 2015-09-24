@@ -15,11 +15,11 @@ module TicTacToe
     end
 
     def current_player
-      turns % 2 == 0 ? player1 : player2
+      turns.even? ? player1 : player2
     end
 
     def last_player
-      turns % 2 == 1 ? player1 : player2
+      turns.odd? ? player1 : player2
     end
 
     def play

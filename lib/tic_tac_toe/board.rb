@@ -20,7 +20,7 @@ module TicTacToe
 
     def get_cell(cell_num)
       row, column = human_to_grid(cell_num)
-      return grid[row][column]
+      grid[row][column]
     end
 
     def diagonal_rows

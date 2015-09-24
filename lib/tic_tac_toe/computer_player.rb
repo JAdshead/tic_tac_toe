@@ -4,7 +4,6 @@ module TicTacToe
   class ComputerPlayer < Player
 
     def get_move
-
       if winning_move
         winning_move
       elsif blocking_move
@@ -46,14 +45,16 @@ module TicTacToe
 
     def force_block
       winning_lines.map do |line|
-        if ((line & opponent_moves).empty? && (line & own_moves).any?)
-          moves = line - own_moves
-          moves.map do |move|
-            forced_move = (line - (own_moves << move)).first
-            opponent_future_moves = opponent_moves << forced_move
-            check_wining_moves(opponent_future_moves).length < 2 ? move : nil
-          end
+        next unless (line & opponent_moves).empty? && (line & own_moves).any?
+
+        moves = line - own_moves
+
+        moves.map do |move|
+          forced_move = (line - (own_moves << move)).first
+          opponent_future_moves = opponent_moves << forced_move
+          check_wining_moves(opponent_future_moves).length < 2 ? move : nil
         end
+
       end.flatten.compact.sample
     end
 
@@ -82,16 +83,25 @@ module TicTacToe
 
     def check_wining_moves moves_made
       moves = winning_lines.map do |line|
+
         arr = line - moves_made
-        available_moves.include?(arr.first) ? arr.first : nil if arr.length == 1
+
+        next unless arr.length == 1
+
+        available_moves.include?(arr.first) ? arr.first : nil
+
       end.compact
     end
 
     def check_fork_moves(moves_made, moves_left = available_moves)
       moves_left.map do |move|
+
         future_moves = moves_made.dup
+
         future_moves << move
+
         (check_wining_moves future_moves).length > 1 ? move : nil
+
       end.compact
     end
 
