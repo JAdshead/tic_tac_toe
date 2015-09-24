@@ -2,7 +2,7 @@
 Play Tic Tac Toe in the command line.
 
 ## Install
-Fork or Clone repo.
+Fork or Clone repo
 
 ## Using
 
@@ -22,3 +22,4 @@ Options:
 
 ## TODO
 - Make computer player class work with dynamic board sizes
+- Make into Gem
