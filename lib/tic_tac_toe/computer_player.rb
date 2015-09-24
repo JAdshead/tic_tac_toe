@@ -14,7 +14,7 @@ module TicTacToe
         force_block
       elsif block_fork_move
         block_fork_move
-      elsif available_moves.length == board.count_cells
+      elsif available_moves.size == board.count_cells
         1
       elsif center_move
         center_move
@@ -52,7 +52,7 @@ module TicTacToe
         moves.map do |move|
           forced_move = (line - (own_moves << move)).first
           opponent_future_moves = opponent_moves << forced_move
-          check_wining_moves(opponent_future_moves).length < 2 ? move : nil
+          check_wining_moves(opponent_future_moves).size < 2 ? move : nil
         end
 
       end.flatten.compact.sample
@@ -77,7 +77,7 @@ module TicTacToe
 
     # def lines_still_possible
     #   winning_lines.select do |line|
-    #     (line - opponent_moves).length > 3
+    #     (line - opponent_moves).size > 3
     #   end
     # end
 
@@ -86,7 +86,7 @@ module TicTacToe
 
         arr = line - moves_made
 
-        next unless arr.length == 1
+        next unless arr.size == 1
 
         available_moves.include?(arr.first) ? arr.first : nil
 
@@ -100,7 +100,7 @@ module TicTacToe
 
         future_moves << move
 
-        (check_wining_moves future_moves).length > 1 ? move : nil
+        (check_wining_moves future_moves).size > 1 ? move : nil
 
       end.compact
     end
