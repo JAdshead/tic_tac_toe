@@ -3,23 +3,14 @@ require_relative 'player'
 module TicTacToe
   class ComputerPlayer < Player
 
-    def get_move
-      if winning_move
-        winning_move
-      elsif blocking_move
-        blocking_move
-      elsif fork_move
-        fork_move
-      elsif force_block
-        force_block
-      elsif block_fork_move
-        block_fork_move
-      elsif available_moves.size == board.count_cells
+    def move
+      move = win || block || fork_move || force_block || block_fork
+      return move if move
+
+      if available_moves.size == board.count_cells
         1
-      elsif center_move
-        center_move
       else
-        available_moves.sample
+        go_center || available_moves.sample
       end
     end
 
@@ -35,11 +26,11 @@ module TicTacToe
       (1..9).to_a - (own_moves + available_moves)
     end
 
-    def winning_move
+    def win
       check_wining_moves(own_moves).sample
     end
 
-    def blocking_move
+    def block
       check_wining_moves(opponent_moves).sample
     end
 
@@ -54,7 +45,6 @@ module TicTacToe
           opponent_future_moves = opponent_moves << forced_move
           check_wining_moves(opponent_future_moves).size < 2 ? move : nil
         end
-
       end.flatten.compact.sample
     end
 
@@ -62,17 +52,18 @@ module TicTacToe
       check_fork_moves(own_moves).sample
     end
 
-    def block_fork_move
+    def block_fork
       check_fork_moves(opponent_moves).sample
     end
 
-    def center_move
+    def go_center
       5 if available_moves.include?(5)
     end
 
     private
+
     def winning_lines
-      [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]]
+      [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]]
     end
 
     # def lines_still_possible
@@ -81,29 +72,24 @@ module TicTacToe
     #   end
     # end
 
-    def check_wining_moves moves_made
-      moves = winning_lines.map do |line|
-
+    def check_wining_moves(moves_made)
+      winning_lines.map do |line|
         arr = line - moves_made
 
         next unless arr.size == 1
 
         available_moves.include?(arr.first) ? arr.first : nil
-
       end.compact
     end
 
     def check_fork_moves(moves_made, moves_left = available_moves)
       moves_left.map do |move|
-
         future_moves = moves_made.dup
 
         future_moves << move
 
         (check_wining_moves future_moves).size > 1 ? move : nil
-
       end.compact
     end
-
   end
 end
