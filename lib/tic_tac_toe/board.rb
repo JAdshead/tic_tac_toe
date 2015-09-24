@@ -51,22 +51,22 @@ module TicTacToe
     def print
       to_print = grid.dup
       puts
-      while to_print.length > 1 do
+      while to_print.length > 1
         row = to_print.shift
         puts "\t " + row.flatten.join(' | ')
         puts "\t --+---+--"
       end
       row = to_print.shift
-      puts "\t " +row.flatten.join(' | ')
+      puts "\t " + row.flatten.join(' | ')
       puts
     end
 
     def count_cells
-      total_cells ||= rows * columns
+      @total_cells ||= rows * columns
     end
 
     def find_cells value
-      grid.flatten.map.with_index { |val, index|  index + 1 if val== value }.compact
+      grid.flatten.map.with_index { |val, i| i + 1 if val == value }.compact
     end
 
     def free_cells
@@ -74,6 +74,7 @@ module TicTacToe
     end
 
     private
+
     def human_to_grid(cell_num)
       cell_num = cell_num.to_i - 1
       [row_number(cell_num), column_number(cell_num)]
