@@ -23,16 +23,19 @@ module TicTacToe
     end
 
     def play
-      print_intructions
-
-      if winner?
-        puts board.print
-        puts "#{last_player.name} wins!!"
-      elsif draw?
-        puts board.print
-        puts "It's a draw!!"
-      else
-        move
+      loop do
+        if winner?
+          puts board.print
+          puts "#{last_player.name} wins!!"
+          break
+        elsif draw?
+          puts board.print
+          puts "It's a draw!!"
+          break
+        else
+          print_intructions
+          move
+        end
       end
     end
 
@@ -50,7 +53,6 @@ module TicTacToe
       end
 
       @turns += 1
-      play
     end
 
     def print_intructions
