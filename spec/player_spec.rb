@@ -4,7 +4,7 @@ require_relative '../lib/tic_tac_toe/player'
 include TicTacToe
 
 describe Player do
-  subject(:player) { Player.new('X', board) }
+  subject(:player) { Player.new(marker: 'X', board: board) }
   let(:board) { double("Board", :grid => [[' ',' '],[' ',' ']], :print => '', :count_cells => 9, :free_cells => "5")}
 
   describe '#initialize' do
@@ -13,7 +13,7 @@ describe Player do
     end
 
     it 'sets player name' do
-      player = Player.new('X', board, 'jerry')
+      player = Player.new(marker: 'X', board: board, name: 'jerry')
       expect(player.name).to eq('jerry')
     end
   end

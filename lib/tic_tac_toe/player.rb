@@ -2,10 +2,10 @@ module TicTacToe
   class Player
     attr_reader :name, :marker, :board
 
-    def initialize(marker, board, name = nil)
-      @marker = marker
-      @board  = board
-      @name   = name || generate_name
+    def initialize(args)
+      @marker = args.fetch(:marker)
+      @board  = args.fetch(:board)
+      @name   = args[:name] || generate_name
     end
 
     def move

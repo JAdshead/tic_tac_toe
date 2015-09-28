@@ -9,8 +9,8 @@ module TicTacToe
 
     def initialize(player_1_class = Player, player_2_class = Player, player_1_name = nil, player_2_name = nil)
       @board    = Board.new
-      @player1  = player_1_class.new('X', @board, player_1_name)
-      @player2  = player_2_class.new('O', @board, player_2_name)
+      @player1  = player_1_class.new(marker: 'X', board: @board, name: player_1_name)
+      @player2  = player_2_class.new(marker: 'O', board: @board, name: player_2_name)
       @turns    = 0
     end
 

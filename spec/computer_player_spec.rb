@@ -4,7 +4,7 @@ require_relative '../lib/tic_tac_toe/computer_player'
 include TicTacToe
 
 describe ComputerPlayer do
-  subject(:computer) { ComputerPlayer.new('X', board) }
+  subject(:computer) { ComputerPlayer.new(marker: 'X', board: board) }
   let(:board) { double("Board", :free_cells => [1,2,3,4,5,6,7,8,9], :find_cells =>[], :count_cells => 9)}
 
   it 'inherits from Player' do
@@ -22,14 +22,14 @@ describe ComputerPlayer do
 
     it 'does not return a value for taken cell' do
       allow(board).to receive(:free_cells) { [4]}
-      computer = ComputerPlayer.new('x',board)
+      computer = ComputerPlayer.new(marker: 'x', board: board)
       expect(computer.move).to eq(4)
     end
 
     it 'has killer instict' do
       allow(board).to receive(:free_cells) {[2,4,5,6,7,8,9]}
       allow(board).to receive(:find_cells).with('x') {[1,3]}
-      computer = ComputerPlayer.new('x',board)
+      computer = ComputerPlayer.new(marker: 'x',board: board)
 
       # run move 6times to minimize chance causing pass
       results = []
@@ -41,7 +41,7 @@ describe ComputerPlayer do
     it 'will defend' do
       allow(board).to receive(:free_cells) {[2,3,4,6,8,9]}
       allow(board).to receive(:find_cells).with('o') {[5]}
-      computer = ComputerPlayer.new('o',board)
+      computer = ComputerPlayer.new(marker: 'o', board: board)
 
       results = []
       6.times { results << computer.move }
@@ -52,7 +52,7 @@ describe ComputerPlayer do
     it 'it will fork - create two oppotunities to win' do
       allow(board).to receive(:free_cells) {[1,3,4,7,9]}
       allow(board).to receive(:find_cells).with('x') {[6,8]}
-      computer = ComputerPlayer.new('x',board)
+      computer = ComputerPlayer.new(marker: 'x', board: board)
 
       results = []
       6.times { results << computer.move }
@@ -63,7 +63,7 @@ describe ComputerPlayer do
     it 'forces opponent to block, block does not create forking move' do
       allow(board).to receive(:free_cells).and_return( [2,3,4,6,7,8] )
       allow(board).to receive(:find_cells).with('o') {[5]}
-      computer = ComputerPlayer.new('o',board)
+      computer = ComputerPlayer.new(marker: 'o', board: board)
 
       results = []
       6.times { results << computer.move }
@@ -74,7 +74,7 @@ describe ComputerPlayer do
     it 'it blocks fork' do
       allow(board).to receive(:free_cells) {[2,3,4,5,7,8,9]}
       allow(board).to receive(:find_cells).with('o') {[]}
-      computer = ComputerPlayer.new('o',board)
+      computer = ComputerPlayer.new(marker: 'o', board: board)
 
       results = []
       6.times { results << computer.move }
@@ -85,7 +85,7 @@ describe ComputerPlayer do
     it 'it will choose center' do
       allow(board).to receive(:free_cells).and_return( [1,2,4,5,6,7,8,9],[1,3,4,5,6,7,8,9],[1,2,3,4,5,7,8,9] )
       allow(board).to receive(:find_cells).with('o') {[]}
-      computer = ComputerPlayer.new('o',board)
+      computer = ComputerPlayer.new(marker: 'o', board: board)
 
       results = []
       6.times { results << computer.move }
@@ -102,7 +102,7 @@ describe ComputerPlayer do
     it 'returns moves made by opponent' do
       allow(board).to receive(:free_cells) {[1,3,4,7,9]}
       allow(board).to receive(:find_cells).with('x') {[6,8]}
-      computer = ComputerPlayer.new('x',board)
+      computer = ComputerPlayer.new(marker: 'x', board: board)
 
       expect(computer.opponent_moves).to eq([2,5])
     end
