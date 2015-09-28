@@ -11,11 +11,15 @@ module TicTacToe
       move = win || block || fork_move || force_block || block_fork
       return move if move
 
-      if available_moves.size == board.count_cells
+      if available_moves.size == total_cells
         1
       else
         go_center || available_moves.sample
       end
+    end
+
+    def total_cells
+      board.count_cells
     end
 
     def available_moves
@@ -97,6 +101,5 @@ module TicTacToe
         wining_moves(opponent_future_moves).size < 2 ? move : nil
       end
     end
-
   end
 end
