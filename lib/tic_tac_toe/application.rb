@@ -4,8 +4,12 @@ require_relative './game'
 
 module TicTacToe
   class Application
+    attr_reader :options, :opt_parser
+
     def initialize(argv)
       process_options(argv)
+      opt_parser.parse(argv)
+      game_type(argv)
     end
 
     def setup_game(p1, p2, p1_name = nil, p2_name = nil)
@@ -18,9 +22,9 @@ module TicTacToe
     end
 
     def process_options(argv)
-      options = {}
+      @options = {}
 
-      opt_parser = OptionParser.new do |opt|
+      @opt_parser = OptionParser.new do |opt|
         opt.banner =  'Usage: tic_tac_toe COMMAND [OPTIONS]'
         opt.separator ''
         opt.separator 'Commands'
@@ -43,21 +47,22 @@ module TicTacToe
         opt.separator ''
         opt.separator ''
       end
+    end
 
-      opt_parser.parse(argv)
-
+    def game_type(argv)
       case argv[0]
       when 'pvp'
-        setup_game(Player, Player, options[:player1name], options[:player2name])
+        setup_game(HumanPlayer, HumanPlayer, options[:player1name], options[:player2name])
       when 'pvc'
-        setup_game(Player, ComputerPlayer, options[:player1name], options[:player2name])
+        setup_game(HumanPlayer, ComputerPlayer, options[:player1name], options[:player2name])
       when 'cvp'
-        setup_game(ComputerPlayer, Player, options[:player1name], options[:player2name])
+        setup_game(ComputerPlayer, HumanPlayer, options[:player1name], options[:player2name])
       when 'cvc'
         setup_game(ComputerPlayer, ComputerPlayer, options[:player1name], options[:player2name])
       else
         puts opt_parser
       end
     end
+
   end
 end

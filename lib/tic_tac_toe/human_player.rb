@@ -11,6 +11,5 @@ module TicTacToe
       end
       move
     end
-
   end
 end
