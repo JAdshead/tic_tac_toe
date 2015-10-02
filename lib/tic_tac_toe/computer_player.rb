@@ -14,7 +14,7 @@ module TicTacToe
       if available_moves.size == total_cells
         1
       else
-        go_center || available_moves.sample
+        center || corner || available_moves.sample
       end
     end
 
@@ -54,8 +54,20 @@ module TicTacToe
       fork_moves(opponent_moves).sample
     end
 
-    def go_center
+    def center
       5 if available_moves.include?(5)
+    end
+
+    def corner
+      available_moves.select do |move|
+        corner_moves.include?(move)
+      end.sample
+    end
+
+    def corner_moves
+      # To be improved to dynamically works out corners
+      # and move logic to board
+      [1,3,7,9]
     end
 
     private
@@ -102,4 +114,5 @@ module TicTacToe
       end
     end
   end
+
 end

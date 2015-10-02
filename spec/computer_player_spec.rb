@@ -93,9 +93,23 @@ describe ComputerPlayer do
       expect(results).to eq([5,5,5,5,5,5])
     end
 
-    it 'it will pick corner if first move' do
+    it 'will pick corner if first move' do
       expect(computer.move).to be(1)
     end
+
+    it 'will pick corner when other moves cant be made' do
+      allow(board).to receive(:free_cells) {[1,2,3,4,6,7,8,9]}
+      allow(board).to receive(:find_cells).with('o') {[]}
+      computer = ComputerPlayer.new(marker: 'o', board: board)
+
+      results = []
+      6.times { results << computer.move }
+
+      expect(results).not_to include(2,4,6,8)
+      expect(results).to include(1)
+    end
+
+
   end
 
   describe '#opponent_moves' do
