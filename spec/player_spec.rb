@@ -5,7 +5,7 @@ include TicTacToe
 
 describe Player do
   subject(:player) { Player.new(marker: 'X', board: board) }
-  let(:board) { double("Board", :grid => [[' ',' '],[' ',' ']], :print => '', :count_cells => 9, :free_cells => "5")}
+  let(:board) { double("Board")}
 
   describe '#initialize' do
     it 'has default name' do
@@ -15,18 +15,6 @@ describe Player do
     it 'sets player name' do
       player = Player.new(marker: 'X', board: board, name: 'jerry')
       expect(player.name).to eq('jerry')
-    end
-  end
-
-  describe '#move' do
-    it 'returns cell number' do
-      allow($stdin).to receive(:gets).and_return("5")
-      expect(player.move).to eq("5")
-    end
-
-    it 'does not allow invalid entries' do
-      allow($stdin).to receive(:gets).and_return("y","five","12","0", "5")
-      expect(player.move).to eq("5")
     end
   end
 
