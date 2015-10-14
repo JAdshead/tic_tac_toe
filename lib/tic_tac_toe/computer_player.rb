@@ -64,11 +64,6 @@ module TicTacToe
       end.sample
     end
 
-    def corner_moves
-      # To be improved to dynamically works out corners
-      # and move logic to board
-      [1,3,7,9]
-    end
 
     private
 
@@ -113,6 +108,11 @@ module TicTacToe
         wining_moves(opponent_future_moves).size < 2 ? move : nil
       end
     end
-  end
 
+    def corner_moves
+      # To be improved to dynamically work out corners
+      # and move logic to board
+      [1,3,7,9]
+    end
+  end
 end
