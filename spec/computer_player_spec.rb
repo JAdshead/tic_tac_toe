@@ -105,8 +105,8 @@ describe ComputerPlayer do
       results = []
       6.times { results << computer.move }
 
-      expect(results).not_to include(2,4,6,8)
-      expect(results).to include(1)
+      expect(results).not_to include(2,4,6,8,5)
+      expect(results).to all(be_an(Integer))
     end
 
 
