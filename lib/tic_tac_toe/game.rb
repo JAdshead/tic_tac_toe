@@ -1,6 +1,7 @@
 require_relative './board'
 require_relative './human_player'
 require_relative './computer_player'
+require_relative './display'
 
 module TicTacToe
   class Game
@@ -25,11 +26,11 @@ module TicTacToe
     def play
       loop do
         if winner?
-          puts board.print
+          Display.game_board(@board.grid)
           puts "#{last_player.name} wins!!"
           break
         elsif draw?
-          puts board.print
+          Display.game_board(@board.grid)
           puts "It's a draw!!"
           break
         else
@@ -42,7 +43,7 @@ module TicTacToe
     def move
       player = current_player
 
-      board.print
+      Display.game_board(@board.grid)
       puts "#{player.name}'s turn."
       puts "Available moves: #{board.free_cells.join(', ')}\n\n"
 

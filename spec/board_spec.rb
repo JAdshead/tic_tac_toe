@@ -39,21 +39,6 @@ describe Board do
     end
   end
 
-  describe '#print' do
-    it 'prints to STDOUT' do
-      expect(STDOUT).to receive(:puts).exactly(7).times
-      board.print
-    end
-
-    context 'with a 5x5 (non default) grid' do
-      board = Board.new(5,5)
-      it 'prints to STDOUT' do
-        expect(STDOUT).to receive(:puts).exactly(11).times
-        board.print
-      end
-    end
-  end
-
   describe 'getting rows' do
     before(:each) do
       (1..9).each do |i|

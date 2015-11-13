@@ -48,19 +48,6 @@ module TicTacToe
       end
     end
 
-    def print
-      to_print = grid.dup
-      puts
-      while to_print.length > 1
-        row = to_print.shift
-        puts "\t " + row.flatten.join(' | ')
-        puts "\t --+---+--"
-      end
-      row = to_print.shift
-      puts "\t " + row.flatten.join(' | ')
-      puts
-    end
-
     def count_cells
       @total_cells ||= rows * columns
     end
