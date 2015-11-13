@@ -47,7 +47,7 @@ module TicTacToe
     end
 
     def force_block
-      force_block_moves
+      force_block_moves.sample
     end
 
     def block_fork
@@ -96,7 +96,7 @@ module TicTacToe
         moves = line - moves_made
 
         safe_moves(moves, line)
-      end.flatten.compact.sample
+      end.flatten.compact
     end
 
     def safe_moves(moves, line)
