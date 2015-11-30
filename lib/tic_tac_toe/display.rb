@@ -16,7 +16,7 @@ module TicTacToe
       puts
     end
 
-
+ 
     private
 
     def self.blank_cells_to_numbers(row, row_index)
@@ -29,7 +29,7 @@ module TicTacToe
     end
 
     def self.not_blank(str)
-      /\S+/ =~ str
+      /\S+/ =~ str.to_s
     end
 
   end
