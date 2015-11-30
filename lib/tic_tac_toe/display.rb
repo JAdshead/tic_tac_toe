@@ -1,18 +1,36 @@
 module TicTacToe
-  class Display
+  module Display
 
     def self.game_board(board)
-      to_print = board.dup
+      total_rows = board.length
+
       puts
-      while to_print.length > 1
-        row = to_print.shift
-        puts "\t " + row.flatten.join(' | ')
-        puts "\t --+---+--"
+
+      board.each_with_index do |row, row_index|
+        row_with_move_numbers = blank_cells_to_numbers(row, row_index)
+
+        puts "\t " + row_with_move_numbers.flatten.join(' | ')
+        puts "\t --+---+--" unless row_index + 1 >= total_rows
       end
-      row = to_print.shift
-      puts "\t " + row.flatten.join(' | ')
+
       puts
     end
+
+
+    private
+
+    def self.blank_cells_to_numbers(row, row_index)
+      previous_cells_count = row.length * row_index
+
+      row.map.with_index do |cell, column_index|
+        column_number = column_index + 1
+        not_blank(cell) ? cell : previous_cells_count + column_number
+      end
+    end
+
+    def self.not_blank(str)
+      /\S+/ =~ str
+    end
+
   end
-  
 end
