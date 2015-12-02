@@ -48,11 +48,10 @@ module TicTacToe
 
       Display.game_board(@game_manager.board.grid)
       puts "#{player.name}'s turn."
-      puts "Available moves: #{board.free_cells.join(', ')}\n\n"
 
       cell = player.move(@game_manager.board)
 
-      until @game_manager.add_move(cell)
+      until @game_manager.new_move(cell)
         puts "\nSorry, invalid entry. Please try again\n\n"
         cell = cell = player.move(@game_manager.board)
       end
