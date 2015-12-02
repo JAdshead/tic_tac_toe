@@ -11,8 +11,8 @@ module TicTacToe
       game_type(argv)
     end
 
-    def setup_game(p1, p2, p1_name = nil, p2_name = nil)
-      @game = Game.new(p1, p2, p1_name, p2_name)
+    def setup_game(p1, p2)
+      @game = Game.new(p1, p2)
       play
     end
 
@@ -51,13 +51,13 @@ module TicTacToe
     def game_type(argv)
       case argv[0]
       when 'pvp'
-        setup_game(HumanPlayer, HumanPlayer, options[:player1name], options[:player2name])
+        setup_game(HumanPlayer, HumanPlayer)
       when 'pvc'
-        setup_game(HumanPlayer, ComputerPlayer, options[:player1name], options[:player2name])
+        setup_game(HumanPlayer, ComputerPlayer)
       when 'cvp'
-        setup_game(ComputerPlayer, HumanPlayer, options[:player1name], options[:player2name])
+        setup_game(ComputerPlayer, HumanPlayer)
       when 'cvc'
-        setup_game(ComputerPlayer, ComputerPlayer, options[:player1name], options[:player2name])
+        setup_game(ComputerPlayer, ComputerPlayer)
       else
         puts opt_parser
       end

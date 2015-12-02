@@ -1,7 +1,5 @@
-require_relative 'player'
-
 module TicTacToe
-  class HumanPlayer < Player
+  class HumanPlayer
 
     def move
       move = $stdin.gets.chomp

@@ -1,4 +1,4 @@
-require_relative './board'
+require 'x_and_os'
 require_relative './human_player'
 require_relative './computer_player'
 require_relative './display'
@@ -7,13 +7,14 @@ module TicTacToe
   class Game
     include Display
 
-    attr_reader :player1, :player2, :board, :turns, :new_game
-    attr_writer :new_game
+    attr_reader :player1, :player2, :board, :turns
 
-    def initialize(player_1_class = Player, player_2_class = Player, player_1_name = nil, player_2_name = nil)
-      @board    = Board.new
-      @player1  = player_1_class.new(marker: 'X', board: @board, name: player_1_name)
-      @player2  = player_2_class.new(marker: 'O', board: @board, name: player_2_name)
+    def initialize(player_1_class = HumanPlayer, player_2_class = ComputerPlayer)
+      @game_manager = XAndOs::Game.new
+
+      @player1  = player_1_class.new
+      @player2  = player_2_class.new
+
       @turns    = 0
     end
 
@@ -27,11 +28,11 @@ module TicTacToe
 
     def play
       loop do
-        if winner?
+        if @game_manager.winner?
           Display.game_board(@board.grid)
           puts "#{last_player.name} wins!!"
           break
-        elsif draw?
+        elsif @game_manager.draw?
           Display.game_board(@board.grid)
           puts "It's a draw!!"
           break
@@ -45,14 +46,15 @@ module TicTacToe
     def move
       player = current_player
 
-      Display.game_board(@board.grid)
+      Display.game_board(@game_manager.board.grid)
       puts "#{player.name}'s turn."
       puts "Available moves: #{board.free_cells.join(', ')}\n\n"
 
-      cell = player.move
-      until board.set_cell(cell, player.marker)
+      cell = player.move(@game_manager.board)
+
+      until @game_manager.add_move(cell)
         puts "\nSorry, invalid entry. Please try again\n\n"
-        cell = player.move
+        cell = cell = player.move(@game_manager.board)
       end
 
       @turns += 1
@@ -64,12 +66,5 @@ module TicTacToe
       puts
     end
 
-    def winner?
-      board.complete_rows.count >= 1
-    end
-
-    def draw?
-      turns >= board.count_cells
-    end
   end
 end

@@ -1,8 +1,7 @@
-require_relative 'player'
 require 'x_and_os'
 
 module TicTacToe
-  class ComputerPlayer < Player
+  class ComputerPlayer
     include XAndOs::GameMaster
     
     def move
