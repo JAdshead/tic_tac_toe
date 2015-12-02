@@ -113,7 +113,7 @@ describe ComputerPlayer do
   end
 
   describe '#opponent_moves' do
-    it 'returns moves made by opponent' do
+    xit 'returns moves made by opponent' do
       allow(board).to receive(:free_cells) {[1,3,4,7,9]}
       allow(board).to receive(:find_cells).with('x') {[6,8]}
       computer = ComputerPlayer.new(marker: 'x', board: board)
