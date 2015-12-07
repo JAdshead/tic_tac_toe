@@ -1,3 +1,9 @@
+# Project Moved
+This project has been moved to
+
+http://github.com/JAdshead/xandos
+
+
 # Tic Tac Toe Game
 Play Tic Tac Toe in the command line.
 
