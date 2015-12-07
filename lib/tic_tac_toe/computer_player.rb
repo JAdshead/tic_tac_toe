@@ -3,14 +3,18 @@ require_relative './nameable'
 
 module TicTacToe
   class ComputerPlayer
-    include XAndOs::GameMaster
+    include XAndOs::GameMastery
     include Nameable
 
-    attr_reader :board
+    attr_reader :board, :marker
+
+    def initialize(args)
+      @board  = args[:board]
+      @marker = args[:marker]
+    end
     
     def move(board)
-      @board = board
-      best_move
+      best_move(board: board)
     end
   end
 end

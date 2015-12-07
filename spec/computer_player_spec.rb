@@ -7,12 +7,8 @@ describe ComputerPlayer do
   subject(:computer) { ComputerPlayer.new(marker: 'X', board: board) }
   let(:board) { double("Board", :free_cells => [1,2,3,4,5,6,7,8,9], :find_cells =>[], :count_cells => 9)}
 
-  it 'inherits from Player' do
-    expect(ComputerPlayer.superclass).to be(Player)
-  end
-
   it 'has own default name' do
-    expect(computer.name).to eq('ComputerPlayer X')
+    expect(computer.name).to eq('ComputerPlayer')
   end
 
   describe '#move' do

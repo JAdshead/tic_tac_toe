@@ -11,10 +11,8 @@ module TicTacToe
 
     def initialize(player_1_class = HumanPlayer, player_2_class = ComputerPlayer)
       @game_manager = XAndOs::Game.new
-
-      @player1  = player_1_class.new
-      @player2  = player_2_class.new
-
+      @player1  = player_1_class.new(marker: 'x')
+      @player2  = player_2_class.new(marker: 'o')
       @turns    = 0
     end
 
@@ -27,17 +25,17 @@ module TicTacToe
     end
 
     def play
+      print_intructions
       loop do
         if @game_manager.winner?
-          Display.game_board(@board.grid)
+          Display.game_board(@game_manager.board.grid)
           puts "#{last_player.name} wins!!"
           break
         elsif @game_manager.draw?
-          Display.game_board(@board.grid)
+          Display.game_board(@game_manager.board.grid)
           puts "It's a draw!!"
           break
         else
-          print_intructions
           move
         end
       end
@@ -51,7 +49,7 @@ module TicTacToe
 
       cell = player.move(@game_manager.board)
 
-      until @game_manager.new_move(cell)
+      until @game_manager.add_move(cell, player.marker)
         puts "\nSorry, invalid entry. Please try again\n\n"
         cell = cell = player.move(@game_manager.board)
       end
